@@ -1,0 +1,44 @@
+{% extends 'base.html' %} {% load static %} {% block main %}
+<div class="login-wrapper mt-5">
+  <div class="login-card">
+    <div class="login-icon">
+      <i class="fas fa-bag-shopping"></i>
+    </div>
+
+    <div class="login-title">Welcome Back</div>
+
+    <div class="login-sub">Login to your Student Market account</div>
+
+    <form method="POST">
+      {% csrf_token %}
+
+      <div class="mb-3 text-start">
+        <label class="form-label fw-semibold">Email</label>
+        <input
+          type="email"
+          name="email"
+          class="form-control"
+          placeholder="your.email@university.edu"
+        />
+      </div>
+
+      <div class="mb-3 text-start">
+        <label class="form-label fw-semibold">Password</label>
+        <input
+          type="password"
+          name="password"
+          class="form-control"
+          placeholder="Enter your password"
+        />
+      </div>
+
+      <button type="submit" class="login-btn">Login</button>
+    </form>
+
+    <div class="register-text">
+      Don't have an account?
+      <a href="{% url 'register' %}">Register here</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

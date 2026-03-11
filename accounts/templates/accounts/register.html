@@ -1,0 +1,91 @@
+{% extends 'base.html' %} {% load static %} {% block main %}
+
+<div class="register-wrapper mt-5">
+  <div class="card register-card p-4 p-md-5 bg-white">
+    <div class="text-center mb-5">
+      <div class="login-icon">
+        <i class="fas fa-bag-shopping"></i>
+      </div>
+
+      <h2 class="fw-bold mb-1">Create Account</h2>
+
+      <p class="text-secondary">Join Student Market today</p>
+    </div>
+
+    <form method="POST" action="{% url 'register' %}">
+      {% csrf_token %}
+
+      <div class="mb-4">
+        <label class="form-label">Full Name</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Your full name"
+          name="name"
+          required
+        />
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          placeholder="your.email@university.edu"
+          name="email"
+          required
+        />
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label">University</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Your university name"
+          name="university"
+          required
+        />
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          placeholder="Create a password (min 6 characters)"
+          name="password"
+          required
+        />
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label">Confirm Password</label>
+        <input
+          type="password"
+          class="form-control"
+          placeholder="Confirm your password"
+          name="confirm"
+          required
+        />
+      </div>
+
+      <button type="submit" class="btn btn-register w-100 mb-4 mt-2">
+        Register
+      </button>
+    </form>
+
+    <div class="text-center">
+      <span class="text-secondary"> Already have an account? </span>
+
+      <a
+        href="{% url 'login' %}"
+        class="text-primary text-decoration-none fw-bold"
+      >
+        Login here
+      </a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
