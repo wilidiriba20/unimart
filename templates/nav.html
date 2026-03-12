@@ -1,4 +1,4 @@
-{% if request.session.user_id %}
+{% if user.is_authenticated %}
 
 <!-- ================= LOGGED IN NAVBAR ================= -->
 
@@ -32,17 +32,23 @@
       <!-- Search Bar -->
       <div class="flex-grow-1 mx-lg-5 my-3 my-lg-0">
         <div class="search-container w-100">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Search for products..."
-          />
+          <form method="GET" action="{% url 'index' %}" class="w-100">
+            <input
+              type="text"
+              name="q"
+              class="form-control"
+              placeholder="Search for products..."
+              value="{{ request.GET.q|default:'' }}"
+            />
+          </form>
         </div>
       </div>
 
       <!-- Buttons -->
       <div class="d-flex flex-column flex-lg-row gap-2">
-        <a href="#" class="btn btn-outline-secondary"> + Sell Item </a>
+        <a href="{%url 'sell'%}" class="btn btn-outline-secondary">
+          + Sell Item
+        </a>
 
         <a href="#" class="btn btn-outline-secondary">
           <i class="fa-solid fa-user"></i> Dashboard
@@ -86,11 +92,15 @@
       <!-- Search Bar -->
       <div class="flex-grow-1 mx-lg-5 my-3 my-lg-0">
         <div class="search-container w-100">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Search for products..."
-          />
+          <form method="GET" action="{% url 'index' %}" class="w-100">
+            <input
+              type="text"
+              name="q"
+              class="form-control"
+              placeholder="Search for products..."
+              value="{{ request.GET.q|default:'' }}"
+            />
+          </form>
         </div>
       </div>
 

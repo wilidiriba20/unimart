@@ -1,7 +1,9 @@
 :root {
   --primary-blue: #2563eb;
 }
-
+#a {
+  text-decoration: none;
+}
 body {
   background-color: #f8f9fa;
   font-family: "Segoe UI", sans-serif;
@@ -11,7 +13,7 @@ body {
 .navbar {
   position: sticky;
   top: 0;
-  z-index: 1000;
+  z-index: 1050;
   background: white;
 }
 .search-container {
@@ -54,12 +56,20 @@ footer {
 }
 
 /* Align icons in footer */
-footer .fas,
+footer .fas:not(.fa-shopping-bag),
 footer .far {
   width: 16px;
   text-align: center;
 }
-
+footer .fa-shopping-bag {
+  font-size: 18px;
+  line-height: 1;
+}
+footer i {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
 /* Uppercase titles */
 .uppercase {
   text-transform: uppercase;
@@ -224,4 +234,7 @@ footer .far {
 
 .btn-register:hover {
   background: #111827;
+}
+.container {
+  z-index: 100;
 }

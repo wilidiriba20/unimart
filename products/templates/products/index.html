@@ -1,0 +1,249 @@
+{% extends 'base.html' %} {% load static %} {% block main %}
+
+<main class="container my-5">
+  <!-- Page Header -->
+  <div class="mb-5">
+    <h1 class="display-5 fw-bold">Browse Products</h1>
+    <p class="text-secondary fs-5">Find great deals on student items</p>
+  </div>
+  <div class="row g-4">
+    <!-- FILTER SIDEBAR -->
+    <div class="col-lg-3">
+      <div class="card p-4 bg-white sticky-top" style="top: 100px">
+        <h5 class="fw-bold mb-4">Filters</h5>
+
+        <form method="GET">
+          <!-- Category -->
+          <div class="mb-4">
+            <label class="form-label">Category</label>
+
+            <select class="form-select bg-light border-0" name="category">
+              <option value="">All</option>
+
+              {% for cat in categories %}
+              <option
+                value="{{ cat }}"
+                {%
+                if
+                request.GET.category=""
+                ="cat"
+                %}selected{%
+                endif
+                %}
+              >
+                {{ cat|capfirst }}
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <!-- Condition -->
+          <div class="mb-4">
+            <label class="form-label">Condition</label>
+
+            <select class="form-select" name="condition">
+              <option value="">All</option>
+
+              <option
+                value="new"
+                {%
+                if
+                request.GET.condition=""
+                ="new"
+                %}selected{%
+                endif
+                %}
+              >
+                New
+              </option>
+              <option
+                value="like_new"
+                {%
+                if
+                request.GET.condition=""
+                ="like_new"
+                %}selected{%
+                endif
+                %}
+              >
+                Like New
+              </option>
+              <option
+                value="good"
+                {%
+                if
+                request.GET.condition=""
+                ="good"
+                %}selected{%
+                endif
+                %}
+              >
+                Good
+              </option>
+              <option
+                value="fair"
+                {%
+                if
+                request.GET.condition=""
+                ="fair"
+                %}selected{%
+                endif
+                %}
+              >
+                Fair
+              </option>
+              <option
+                value="used"
+                {%
+                if
+                request.GET.condition=""
+                ="used"
+                %}selected{%
+                endif
+                %}
+              >
+                Used
+              </option>
+            </select>
+          </div>
+
+          <!-- Price -->
+          <div class="mb-4">
+            <label class="form-label">Max Price (birr)</label>
+
+            <input
+              type="range"
+              class="form-range"
+              min="0"
+              max="20000"
+              name="max_price"
+              value="{{ request.GET.max_price|default:20000 }}"
+            />
+          </div>
+
+          <!-- Sort -->
+          <div class="mb-4">
+            <label class="form-label">Sort By</label>
+
+            <select class="form-select bg-light border-0" name="sort">
+              <option
+                value="newest"
+                {%
+                if
+                request.GET.sort=""
+                ="newest"
+                or
+                not
+                request.GET.sort
+                %}selected{%
+                endif
+                %}
+              >
+                Newest First
+              </option>
+
+              <option
+                value="price_low"
+                {%
+                if
+                request.GET.sort=""
+                ="price_low"
+                %}selected{%
+                endif
+                %}
+              >
+                Price: Low to High
+              </option>
+
+              <option
+                value="price_high"
+                {%
+                if
+                request.GET.sort=""
+                ="price_high"
+                %}selected{%
+                endif
+                %}
+              >
+                Price: High to Low
+              </option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-outline-secondary w-100 mb-2">
+            Apply Filters
+          </button>
+
+          <a href="{% url 'index' %}" class="btn btn-outline-secondary w-100">
+            Reset Filters
+          </a>
+        </form>
+      </div>
+    </div>
+
+    <!-- PRODUCTS GRID -->
+    <div class="col-lg-9">
+      <div class="row g-4">
+        {% for product in products %}
+
+        <div class="col-md-6 col-lg-4">
+          <a
+            href="{% url 'product_detail' product.id %}"
+            class="text-decoration-none text-dark"
+          >
+            <div class="card product-card h-100 bg-white">
+              <!-- Image -->
+              <div class="position-relative">
+                <img
+                  src="{{ product.image.url }}"
+                  class="card-img-top"
+                  style="height: 240px; object-fit: cover"
+                />
+
+                <span class="badge bg-dark position-absolute top-0 start-0 m-2">
+                  {{ product.category|capfirst }}
+                </span>
+              </div>
+
+              <!-- Card Body -->
+              <div class="card-body p-4">
+                <h5 class="fw-bold">{{ product.title }}</h5>
+
+                <h4 class="text-primary mb-2">{{ product.price }} birr</h4>
+
+                <p class="text-muted small">
+                  {{ product.description|truncatechars:60 }}
+                </p>
+
+                <p class="text-muted small mb-4">
+                  <i class="fas fa-location-dot me-2"></i>
+                  {{ product.seller.university }}
+                </p>
+
+                <hr />
+
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="small">
+                    {{ product.seller.first_name|capfirst }}
+                  </span>
+
+                  <span class="badge bg-secondary">
+                    {{ product.condition|capfirst }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        {% empty %}
+
+        <p class="text-muted">No products found.</p>
+
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</main>
+
+{% endblock %}
