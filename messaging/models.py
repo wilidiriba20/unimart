@@ -1,22 +1,33 @@
-# messaging/models.py
 from django.db import models
-from django.contrib.auth import get_user_model
-
-User = get_user_model()  # dynamically gets your custom User model
+from django.conf import settings
+from products.models import Product
 
 class Message(models.Model):
     sender = models.ForeignKey(
-        User,
-        related_name='sent_messages',
-        on_delete=models.CASCADE
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='sent_messages'
     )
     receiver = models.ForeignKey(
-        User,
-        related_name='received_messages',
-        on_delete=models.CASCADE
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='received_messages'
     )
-    message = models.TextField()
-    date = models.DateTimeField(auto_now_add=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='chats')
+    content = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False)
 
-    def __str__(self):
-        return f"{self.sender} -> {self.receiver}"
+    class Meta:
+        ordering = ['timestamp']
+
+class Review(models.Model):
+    reviewer = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reviews_given'
+    )
+    seller = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='reviews_received'
+    )
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    rating = models.IntegerField(choices=[(i, i) for i in range(1, 6)])
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('reviewer', 'product')

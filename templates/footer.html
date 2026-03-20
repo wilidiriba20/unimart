@@ -21,9 +21,19 @@
           Quick Links
         </h6>
         <ul class="list-unstyled">
-          <li><a href="{%url 'index'%}" class="anchor">Browse Products</a></li>
-          <li><a href="#" class="anchor">Dashboard</a></li>
-          <li><a href="{%url 'sell'%}" class="anchor">Sell an Item</a></li>
+          <li>
+            <a href="{%url 'products:index'%}" class="anchor"
+              >Browse Products</a
+            >
+          </li>
+          <li>
+            <a href="{% url 'dashbord:dashboard' %}" class="anchor"
+              >Dashboard</a
+            >
+          </li>
+          <li>
+            <a href="{%url 'products:sell'%}" class="anchor">Sell an Item</a>
+          </li>
         </ul>
       </div>
 
@@ -36,6 +46,7 @@
         <ul class="list-unstyled text-secondary small">
           <li>Clothing</li>
           <li>Electronics</li>
+          <li>Food</li>
           <li>Books & Learning</li>
           <li>Beauty & Health</li>
         </ul>

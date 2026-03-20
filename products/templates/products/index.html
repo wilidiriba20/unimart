@@ -16,10 +16,8 @@
           <!-- Category -->
           <div class="mb-4">
             <label class="form-label">Category</label>
-
             <select class="form-select bg-light border-0" name="category">
               <option value="">All</option>
-
               {% for cat in categories %}
               <option
                 value="{{ cat }}"
@@ -40,91 +38,41 @@
           <!-- Condition -->
           <div class="mb-4">
             <label class="form-label">Condition</label>
-
-            <select class="form-select" name="condition">
+            <select class="form-select bg-light border-0" name="condition">
               <option value="">All</option>
-
+              {% for cond, label in [ ('new','New'), ('like_new','Like New'),
+              ('good','Good'), ('fair','Fair'), ('used','Used') ] %}
               <option
-                value="new"
+                value="{{ cond }}"
                 {%
                 if
                 request.GET.condition=""
-                ="new"
+                ="cond"
                 %}selected{%
                 endif
                 %}
               >
-                New
-              </option>
-              <option
-                value="like_new"
-                {%
-                if
-                request.GET.condition=""
-                ="like_new"
-                %}selected{%
-                endif
-                %}
-              >
-                Like New
-              </option>
-              <option
-                value="good"
-                {%
-                if
-                request.GET.condition=""
-                ="good"
-                %}selected{%
-                endif
-                %}
-              >
-                Good
-              </option>
-              <option
-                value="fair"
-                {%
-                if
-                request.GET.condition=""
-                ="fair"
-                %}selected{%
-                endif
-                %}
-              >
-                Fair
-              </option>
-              <option
-                value="used"
-                {%
-                if
-                request.GET.condition=""
-                ="used"
-                %}selected{%
-                endif
-                %}
-              >
-                Used
+                {{ label }}
               </option>
             </select>
           </div>
 
-          <!-- Price -->
+          <!-- Max Price as text input -->
           <div class="mb-4">
             <label class="form-label">Max Price (birr)</label>
-
             <input
-              type="range"
-              class="form-range"
-              min="0"
-              max="20000"
+              type="number"
+              class="form-control bg-light border-1"
               name="max_price"
-              value="{{ request.GET.max_price|default:20000 }}"
+              placeholder="Enter max price"
+              value="{{ request.GET.max_price|default:'' }}"
+              min="0"
             />
           </div>
 
           <!-- Sort -->
           <div class="mb-4">
             <label class="form-label">Sort By</label>
-
             <select class="form-select bg-light border-0" name="sort">
               <option
                 value="newest"
@@ -141,7 +89,6 @@
               >
                 Newest First
               </option>
-
               <option
                 value="price_low"
                 {%
@@ -154,7 +101,6 @@
               >
                 Price: Low to High
               </option>
-
               <option
                 value="price_high"
                 {%
@@ -173,14 +119,14 @@
           <button type="submit" class="btn btn-outline-secondary w-100 mb-2">
             Apply Filters
           </button>
-
-          <a href="{% url 'index' %}" class="btn btn-outline-secondary w-100">
-            Reset Filters
-          </a>
+          <a
+            href="{% url 'products:index' %}"
+            class="btn btn-outline-secondary w-100"
+            >Reset Filters</a
+          >
         </form>
       </div>
     </div>
-
     <!-- PRODUCTS GRID -->
     <div class="col-lg-9">
       <div class="row g-4">
@@ -188,7 +134,7 @@
 
         <div class="col-md-6 col-lg-4">
           <a
-            href="{% url 'product_detail' product.id %}"
+            href="{% url 'products:product_detail' product.id %}"
             class="text-decoration-none text-dark"
           >
             <div class="card product-card h-100 bg-white">

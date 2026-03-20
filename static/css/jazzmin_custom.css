@@ -1,0 +1,181 @@
+/* =========================
+   Jazzmin / AdminLTE Custom CSS
+   ========================= */
+
+/* -------------------------
+   Sidebar Styling
+   ------------------------- */
+.app-sidebar {
+  background-color: #f8f9fb !important;
+  border-right: 1px solid #dfe0e5 !important; /* light gray border */
+  color: #222328 !important;
+}
+
+.app-sidebar .nav-link {
+  color: #222328 !important;
+  font-weight: 500;
+}
+
+.app-sidebar .nav-link:hover,
+.app-sidebar .nav-link.active {
+  background-color: #0b6eff !important;
+  color: #ffffff !important;
+}
+
+.app-sidebar .nav-header {
+  color: #222328 !important;
+  font-weight: 600;
+}
+
+.app-sidebar .nav-icon {
+  color: #0b6eff !important;
+}
+
+/* Sidebar scrollbar */
+.app-sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.app-sidebar::-webkit-scrollbar-thumb {
+  background-color: #0b6eff;
+  border-radius: 3px;
+}
+
+.app-sidebar::-webkit-scrollbar-track {
+  background-color: #f8f9fb;
+}
+
+/* -------------------------
+   Sidebar Brand / Logo
+   ------------------------- */
+.sidebar-brand a {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: 10px !important;
+  background: white;
+  border-bottom: 1px solid #dfe0e5 !important; /* gray border */
+}
+
+.sidebar-brand a img {
+  width: 55px !important; /* same size as login logo */
+  height: 50px !important;
+  object-fit: cover !important;
+  display: block;
+  margin: 0 auto; /* center horizontally */
+}
+
+.sidebar-brand .brand-text {
+  color: black !important; /* now text will be black */
+  font-weight: 900 !important;
+}
+
+/* -------------------------
+   User Panel
+   ------------------------- */
+.user-panel .info a {
+  color: #222328 !important;
+  font-weight: 500;
+}
+
+.user-panel .info a:hover {
+  color: #0b6eff !important;
+}
+
+/* -------------------------
+   Login Page Logo
+   ------------------------- */
+.login-logo img,
+img.logo-light,
+img.logo-dark {
+  width: 58px !important; /* unified size with sidebar */
+  height: 58px !important;
+  object-fit: cover !important;
+  display: block;
+  margin: 0 auto 20px auto; /* center with spacing */
+}
+
+/* -------------------------
+   Buttons
+   ------------------------- */
+.btn-primary {
+  background-color: #0b6eff !important;
+  border-color: #0b6eff !important;
+  color: #ffffff !important;
+}
+
+.btn-primary:hover {
+  background-color: #0950cc !important;
+  border-color: #0950cc !important;
+}
+
+/* -------------------------
+   Tables
+   ------------------------- */
+.table th,
+.table td {
+  border-top: 1px solid #e0e0e0;
+  color: #222328;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #e8f0fe !important;
+}
+
+/* -------------------------
+   Form Inputs
+   ------------------------- */
+.form-control {
+  background-color: #ffffff;
+  border: 1px solid #0b6eff;
+  color: #222328;
+}
+
+.form-control:focus {
+  border-color: #0b6eff;
+  box-shadow: 0 0 0 0.2rem rgba(11, 110, 255, 0.25);
+}
+
+/* -------------------------
+   Footer
+   ------------------------- */
+footer {
+  background-color: white !important;
+  color: #000 !important;
+}
+
+/* -------------------------
+   Horizontal Rule
+   ------------------------- */
+hr {
+  border: none;
+  height: 1px;
+  background-color: #dfe0e5 !important;
+  margin: 1rem 0;
+}
+.float-end.d-none.d-sm-inline {
+  display: none !important;
+}
+/* =========================
+   Product card styling for Jazzmin
+   ========================= */
+.product-box {
+  width: 180px; /* box width */
+  height: 180px; /* box height */
+  border: 1px solid #dfe0e5;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  padding: 2px;
+  background: #fff;
+  margin: auto;
+}
+
+.admin-product-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover; /* crop image nicely */
+  border-radius: 6px;
+}

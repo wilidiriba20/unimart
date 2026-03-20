@@ -9,7 +9,7 @@
     <!-- Logo -->
     <a
       class="navbar-brand d-flex align-items-center fw-bold fs-3"
-      href="{% url 'index' %}"
+      href="{% url 'products:index' %}"
     >
       <i
         class="fas fa-shopping-bag me-2 p-2 bg-primary text-white rounded shadow-sm"
@@ -32,7 +32,7 @@
       <!-- Search Bar -->
       <div class="flex-grow-1 mx-lg-5 my-3 my-lg-0">
         <div class="search-container w-100">
-          <form method="GET" action="{% url 'index' %}" class="w-100">
+          <form method="GET" action="{% url 'products:index' %}" class="w-100">
             <input
               type="text"
               name="q"
@@ -46,11 +46,14 @@
 
       <!-- Buttons -->
       <div class="d-flex flex-column flex-lg-row gap-2">
-        <a href="{%url 'sell'%}" class="btn btn-outline-secondary">
+        <a href="{%url 'products:sell'%}" class="btn btn-outline-secondary">
           + Sell Item
         </a>
 
-        <a href="#" class="btn btn-outline-secondary">
+        <a
+          href="{% url 'dashbord:dashboard' %}"
+          class="btn btn-outline-secondary"
+        >
           <i class="fa-solid fa-user"></i> Dashboard
         </a>
 
@@ -69,7 +72,7 @@
     <!-- Logo -->
     <a
       class="navbar-brand d-flex align-items-center fw-bold fs-3"
-      href="{% url 'index' %}"
+      href="{% url 'products:index' %}"
     >
       <i
         class="fas fa-shopping-bag me-2 p-2 bg-primary text-white rounded shadow-sm"
@@ -92,7 +95,7 @@
       <!-- Search Bar -->
       <div class="flex-grow-1 mx-lg-5 my-3 my-lg-0">
         <div class="search-container w-100">
-          <form method="GET" action="{% url 'index' %}" class="w-100">
+          <form method="GET" action="{% url 'products:index' %}" class="w-100">
             <input
               type="text"
               name="q"

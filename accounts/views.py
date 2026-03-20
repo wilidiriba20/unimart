@@ -34,7 +34,7 @@ def register(request):
         # ✅ Correct login
         auth_login(request, user, backend='django.contrib.auth.backends.ModelBackend')
 
-        return redirect("index")
+        return redirect("products:index")
 
     return render(request, "accounts/register.html")
 
@@ -47,7 +47,7 @@ def login(request):
         user = authenticate(request, email=email, password=password)
         if user:
             auth_login(request, user)
-            return redirect("index")
+            return redirect("products:index")
         else:
             return render(request, "accounts/login.html", {"error": "Invalid email or password"})
 

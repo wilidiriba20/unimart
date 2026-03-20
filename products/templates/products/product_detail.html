@@ -1,7 +1,7 @@
 {% extends "base.html" %} {% load static %} {% block main %}
 
 <div class="container my-5">
-  <a href="{% url 'index' %}" class="text-decoration-none mb-4 d-inline-block">
+  <a href="{% url 'products:index' %}" class="text-decoration-none mb-4 d-inline-block">
     ← Back to Products
   </a>
 
@@ -30,20 +30,27 @@
 
       <hr />
 
-      <!-- Seller Info -->
-      <div class="card p-3 mb-4">
-        <h5>Seller Information</h5>
+     <!-- Seller Info -->
+<div class="card p-3 mb-4">
+  <h5>Seller Information</h5>
 
-        <strong
-          >{{ product.seller.first_name|capfirst  }} {{product.seller.last_name|capfirst }}</strong
-        >
-        <br />
+  <strong>
+    {{ product.seller.first_name|capfirst }} {{ product.seller.last_name|capfirst }}
+  </strong>
+  <br />
 
-        <span class="text-muted">{{product.seller.university|capfirst }}</span>
-      </div>
+  <span class="text-muted">{{ product.seller.university|capfirst }}</span>
+
+  <!-- Seller Rating -->
+  <div class="text-warning small mb-3 mt-2">
+  <i class="fas fa-star"></i>
+  {{ avg_rating|floatformat:1 }} <!-- Shows average like 4.2 -->
+  <span class="text-secondary">({{ total_reviews }})</span>
+  </div>
+</div>
 
       <!-- Contact Button -->
-      <a href="#" class="btn btn-dark w-100"> 💬 Contact Seller </a>
+      <a href="{% url 'messaging:chat_detail' product.id %}" class="btn btn-dark w-100"> 💬 Contact Seller </a>
     </div>
   </div>
 </div>

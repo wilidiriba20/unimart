@@ -11,7 +11,7 @@
 
     <div class="login-sub">Login to your Student Market account</div>
 
-    <form method="POST">
+    <form method="POST" action="{% url 'login' %}">
       {% csrf_token %}
 
       <div class="mb-3 text-start">

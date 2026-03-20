@@ -1,129 +1,246 @@
+/* =========================
+   CSS Variables
+   ========================= */
 :root {
-  --primary-blue: #2563eb;
-}
-#a {
-  text-decoration: none;
-}
-body {
-  background-color: #f8f9fa;
-  font-family: "Segoe UI", sans-serif;
+  --primary-blue: #0b6eff;
+  --bg-light: #f8f9fb;
+  --text-dark: #222328;
+  --gray-light: #f8f9fb;
+  --gray-muted: #6c757d;
+  --border-gray: #dfe0e5;
 }
 
-/* navbar */
+/* =========================
+   Global body
+   ========================= */
+body {
+  background-color: var(--bg-light);
+  font-family: "Segoe UI", sans-serif;
+  color: var(--text-dark);
+  margin: 0;
+}
+
+/* =========================
+   Anchor links
+   ========================= */
+a, #a {
+  text-decoration: none !important;
+  color: var(--gray-muted) !important;
+  transition: all 0.3s ease;
+}
+
+a:hover, #a:hover {
+  color: var(--primary-blue) !important;
+  text-decoration: none !important;
+  transform: translateX(3px);
+}
+
+/* =========================
+   Navbar
+   ========================= */
 .navbar {
   position: sticky;
   top: 0;
   z-index: 1050;
   background: white;
-}
-.search-container {
-  position: relative;
+  border-bottom: 1px solid var(--primary-blue);
 }
 
-.search-container input {
-  padding-left: 40px;
+.navbar-brand img {
+  height: 40px;
+  margin-right: 10px;
 }
 
-.search-container i {
-  position: absolute;
-  top: 50%;
-  left: 12px;
-  transform: translateY(-50%);
-  color: gray;
+.navbar-nav .nav-link {
+  color: var(--text-dark) !important;
+  font-weight: 500;
 }
 
-/* Footer styling */
-footer {
+.navbar-nav .nav-link:hover {
+  color: var(--primary-blue) !important;
+}
+
+/* Dropdown menus */
+.navbar .dropdown-menu,
+.navbar-collapse .dropdown-menu {
+  background-color: white !important;
+  border: 1px solid var(--primary-blue) !important;
+  color: var(--text-dark);
+}
+
+.navbar .dropdown-menu a,
+.navbar-collapse .dropdown-menu a {
+  color: var(--text-dark) !important;
+  font-weight: 500;
+}
+
+.navbar .dropdown-menu a:hover,
+.navbar-collapse .dropdown-menu a:hover {
+  background-color: var(--primary-blue) !important;
+  color: #ffffff !important;
+}
+
+.navbar .dropdown-divider,
+.navbar-collapse .dropdown-divider {
+  border-top: 1px solid var(--primary-blue) !important;
+}
+
+.navbar-collapse {
+  background-color: white !important;
+}
+
+.navbar-collapse .nav-link:hover {
+  background-color: var(--bg-light) !important;
+}
+
+/* =========================
+   Sidebar (Jazzmin / AdminLTE)
+   ========================= */
+.app-sidebar {
+  background-color: var(--bg-light) !important;
+  border-right: 1px solid var(--border-gray) !important;
+  color: var(--text-dark) !important;
+}
+
+.app-sidebar .nav-link {
+  color: var(--text-dark) !important;
+  font-weight: 500;
+}
+
+.app-sidebar .nav-link:hover,
+.app-sidebar .nav-link.active {
+  background-color: var(--primary-blue) !important;
+  color: #ffffff !important;
+}
+
+.app-sidebar .nav-header {
+  color: var(--text-dark) !important;
+  font-weight: 600;
+}
+
+.app-sidebar .nav-icon {
+  color: var(--primary-blue) !important;
+}
+
+/* Sidebar scrollbar */
+.app-sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.app-sidebar::-webkit-scrollbar-thumb {
+  background-color: var(--primary-blue);
+  border-radius: 3px;
+}
+
+.app-sidebar::-webkit-scrollbar-track {
+  background-color: var(--bg-light);
+}
+
+/* =========================
+   Sidebar brand/logo - full width without text
+   ========================= */
+.sidebar-brand a {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  padding: 10px !important;
   background: white;
-  border-top: 1px solid #eee;
-  padding: 60px 0 30px;
-  margin-top: 100px;
+  border-bottom: 1px solid var(--border-gray);
 }
-.anchor {
+
+.sidebar-brand a img {
+  width: 100% !important;      /* fills brand area */
+  height: auto !important;
+  object-fit: contain !important;
+  margin: 0 !important;
+}
+
+.sidebar-brand a .brand-text {
+  display: none !important;     /* hide text completely */
+}
+
+/* User panel */
+.user-panel .info a {
+  color: var(--text-dark) !important;
+  font-weight: 500;
+}
+
+.user-panel .info a:hover {
+  color: var(--primary-blue) !important;
+}
+
+/* =========================
+   Admin content / body
+   ========================= */
+body {
+  background-color: var(--bg-light) !important;
+  color: var(--text-dark) !important;
+}
+
+/* =========================
+   Buttons
+   ========================= */
+.btn-primary {
+  background-color: var(--primary-blue) !important;
+  border-color: var(--primary-blue) !important;
+  color: #ffffff !important;
+}
+
+.btn-primary:hover {
+  background-color: #0950cc !important;
+  border-color: #0950cc !important;
+}
+
+/* =========================
+   Tables
+   ========================= */
+.table th,
+.table td {
+  border-top: 1px solid var(--border-gray);
+  color: var(--text-dark);
+}
+
+.table-hover tbody tr:hover {
+  background-color: #e8f0fe !important;
+}
+
+/* =========================
+   Footer
+   ========================= */
+footer {
+  background-color: white !important;
+  border-top: 1px solid var(--border-gray);
+  color: var(--text-dark) !important;
+}
+
+footer .anchor {
   display: inline-block;
   margin-bottom: 14px;
   font-size: 0.9rem;
+  color: var(--gray-muted) !important;
+  text-decoration: none !important;
   transition: all 0.3s ease;
 }
-.anchor {
-  text-decoration: none !important; /* Remove underline */
-  color: #6c757d !important; /* Default gray */
-}
-.anchor:hover {
-  color: var(--primary-blue) !important; /* Blue on hover */
-  text-decoration: none !important;
+
+footer .anchor:hover {
+  color: var(--primary-blue) !important;
   transform: translateX(3px);
 }
 
-/* Align icons in footer */
-footer .fas:not(.fa-shopping-bag),
-footer .far {
-  width: 16px;
-  text-align: center;
-}
-footer .fa-shopping-bag {
-  font-size: 18px;
-  line-height: 1;
-}
 footer i {
   display: inline-flex;
   align-items: center;
   justify-content: center;
 }
-/* Uppercase titles */
-.uppercase {
-  text-transform: uppercase;
-  font-size: 0.85rem;
-}
-/*main*/
-.product-card {
-  border: none;
-  border-radius: 12px;
-  transition: 0.3s;
+
+/* Horizontal rule */
+hr {
+  border-color: var(--border-gray) !important;
 }
 
-.product-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-}
-
-.filter-card {
-  border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
-}
-
-/* sticky sidebar */
-@media (min-width: 992px) {
-  .sticky-filter {
-    position: sticky;
-    top: 120px;
-    height: fit-content;
-  }
-}
-
-.badge-category {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  background: white;
-  padding: 5px 10px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.price-text {
-  color: #2563eb;
-  font-weight: 700;
-}
-
-.condition-tag {
-  background: #f1f5f9;
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 12px;
-}
-/*login*/
+/* =========================
+   Login
+   ========================= */
 .login-wrapper {
   min-height: 80vh;
   display: flex;
@@ -142,7 +259,7 @@ footer i {
 
 .login-icon {
   font-size: 40px;
-  color: #2563eb;
+  color: var(--primary-blue);
   margin-bottom: 15px;
 }
 
@@ -157,16 +274,16 @@ footer i {
   margin-bottom: 30px;
 }
 
-.form-control {
-  background: #f3f4f6;
+.login-card .form-control {
+  background: var(--gray-light);
   border: none;
   padding: 12px;
   border-radius: 8px;
 }
 
-.form-control:focus {
+.login-card .form-control:focus {
   box-shadow: none;
-  background: #f3f4f6;
+  background: var(--gray-light);
 }
 
 .login-btn {
@@ -183,7 +300,9 @@ footer i {
   background: #111827;
 }
 
-/*register*/
+/* =========================
+   Register
+   ========================= */
 .register-wrapper {
   min-height: 100vh;
   display: flex;
@@ -196,6 +315,7 @@ footer i {
   width: 450px;
   border-radius: 16px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  padding: 40px;
 }
 
 .brand-icon-box {
@@ -208,20 +328,8 @@ footer i {
   justify-content: center;
   border-radius: 12px;
   font-size: 28px;
-  color: #2563eb;
+  color: var(--primary-blue);
   margin-bottom: 15px;
-}
-
-.form-control {
-  background: #f3f4f6;
-  border: none;
-  padding: 12px;
-  border-radius: 8px;
-}
-
-.form-control:focus {
-  background: #f3f4f6;
-  box-shadow: none;
 }
 
 .btn-register {
@@ -230,11 +338,27 @@ footer i {
   padding: 12px;
   border-radius: 10px;
   font-weight: 600;
+  width: 100%;
+  margin-top: 10px;
 }
 
 .btn-register:hover {
   background: #111827;
 }
-.container {
-  z-index: 100;
+
+/* =========================
+   Star rating
+   ========================= */
+.star-rating label {
+  font-size: 2rem;
+  color: #ccc;
+  cursor: pointer;
+}
+
+.star-rating input {
+  display: none;
+}
+
+.star-rating input:checked ~ label {
+  color: #ffc107;
 }

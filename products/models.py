@@ -1,8 +1,5 @@
 from django.db import models
-from accounts.models import User
-
-from django.db import models
-
+from django.conf import settings   # ✅ ADD THIS
 
 class Product(models.Model):
 
@@ -20,7 +17,9 @@ class Product(models.Model):
     image = models.ImageField(upload_to='products/')
     category = models.CharField(max_length=100)
     condition = models.CharField(max_length=20, choices=CONDITION_CHOICES)
-    seller = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    seller = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # ✅ correct now
+
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
