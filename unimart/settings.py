@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+import dj_database_url  # make sure to install: pip install dj-database-url
 
 # =========================
 # BASE DIRECTORY
@@ -9,15 +10,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # =========================
 # SECURITY
 # =========================
-# Get from environment variables
 SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-secret-key')
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-# Add your Render domain or '*' for testing
+# Replace with your Render URL(s)
 ALLOWED_HOSTS = [
-    "unimart-2-ybgw.onrender.com",  # your Render URL
-    "www.unimart-2-ybgw.onrender.com",  # optional
+    "unimart-2-ybgw.onrender.com",
+    "www.unimart-2-ybgw.onrender.com",
 ]
+
 # =========================
 # CUSTOM USER
 # =========================
@@ -45,7 +46,7 @@ INSTALLED_APPS = [
 # =========================
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # serve static in production
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # static files in production
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -88,20 +89,17 @@ WSGI_APPLICATION = 'unimart.wsgi.application'
 # DATABASE
 # =========================
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',  # change to Postgres if needed
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
 }
 
 # =========================
 # PASSWORD VALIDATION
 # =========================
 AUTH_PASSWORD_VALIDATORS = [
-    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',},
-    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',},
-    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',},
-    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
 # =========================
@@ -116,9 +114,9 @@ USE_TZ = True
 # STATIC & MEDIA FILES
 # =========================
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / "static"]           # your dev static folder
-STATIC_ROOT = BASE_DIR / 'staticfiles'            # production static files
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'  # WhiteNoise
+STATICFILES_DIRS = [BASE_DIR / "static"]           # dev static
+STATIC_ROOT = BASE_DIR / 'staticfiles'            # production static
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
@@ -142,4 +140,19 @@ JAZZMIN_UI_TWEAKS = {
 # =========================
 # LOGIN
 # =========================
-LOGIN_URL = 'login'  # URL name of login view
+LOGIN_URL = 'login'
+
+# =========================
+# LOGGING (helps debug 500 errors)
+# =========================
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {'class': 'logging.StreamHandler'},
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO',
+    },
+}
