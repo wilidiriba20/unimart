@@ -17,6 +17,7 @@ DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 ALLOWED_HOSTS = [
     "unimart-2-ybgw.onrender.com",
     "www.unimart-2-ybgw.onrender.com",
+    "*"
 ]
 
 # =========================
