@@ -14,8 +14,10 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-secret-key')
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 # Add your Render domain or '*' for testing
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
-
+ALLOWED_HOSTS = [
+    "unimart-2-ybgw.onrender.com",  # your Render URL
+    "www.unimart-2-ybgw.onrender.com",  # optional
+]
 # =========================
 # CUSTOM USER
 # =========================
