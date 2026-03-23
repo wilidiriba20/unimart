@@ -184,8 +184,7 @@ env/
 # Environment variables
 .env
 
-# Database
-db.sqlite3
+
 
 # Static & media
 staticfiles/
