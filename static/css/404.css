@@ -1,0 +1,66 @@
+/* 404 Background */
+.error-code {
+  font-size: 120px;
+  font-weight: 700;
+  color: #dcdfe6;
+  position: relative;
+}
+/* Center the container vertically and horizontally */
+.containeras{
+  display: flex;
+  flex-direction: column; /* stack children vertically */
+  justify-content: center; /* center vertically */
+  align-items: center; /* center horizontally */
+
+  text-align: center; /* center text inside */
+}
+
+h1 {
+  margin-top: -20px;
+  font-size: 32px;
+  color: #1f2937;
+}
+
+.description {
+  margin-top: 15px;
+  color: #6b7280;
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+.buttons {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.btn {
+  padding: 12px 22px;
+  border-radius: 10px;
+  font-size: 15px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-home {
+  background: #0f172a;
+  color: white;
+}
+
+.btn-home:hover {
+  background: #020617;
+}
+
+.btn-browse {
+  border: 1px solid #d1d5db;
+  color: #111827;
+  background: white;
+}
+
+.btn-browse:hover {
+  background: #f9fafb;
+}

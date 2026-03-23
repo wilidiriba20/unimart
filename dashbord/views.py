@@ -4,7 +4,7 @@ from django.db.models import Avg
 from products.models import Product
 from messaging.models import Message
 
-@login_required
+@login_required(login_url='login')
 def dashbord(request):
     # ✅ Only latest products
     products = Product.objects.filter(

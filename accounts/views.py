@@ -57,3 +57,5 @@ def login(request):
 def logout(request):
     auth_logout(request)
     return redirect('login')
+def custom_404(request, exception):
+    return render(request, '404.html', status=404)

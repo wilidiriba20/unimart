@@ -16,6 +16,6 @@ urlpatterns = [
 
 # The path can be a URL or a path to your static folder
 
-
+handler404 = 'accounts.views.custom_404'
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
