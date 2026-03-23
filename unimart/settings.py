@@ -1,24 +1,32 @@
 import os
 from pathlib import Path
 
+# =========================
 # BASE DIRECTORY
+# =========================
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# =========================
 # SECURITY
-SECRET_KEY = 'django-insecure-*0h_@ee)!2k^x0l$a-pp7bel4(ik_9&aiq*l=hsf8opr=&by+b'
-DEBUG = False
-ALLOWED_HOSTS = ['*']
+# =========================
+# Get from environment variables
+SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-secret-key')
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-# Custom User
+# Add your Render domain or '*' for testing
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
+
+# =========================
+# CUSTOM USER
+# =========================
 AUTH_USER_MODEL = 'accounts.User'
 
-# ===================================================================
-# 🔹 APPLICATION DEFINITION
-# ===================================================================
+# =========================
+# APPLICATIONS
+# =========================
 INSTALLED_APPS = [
-  
-    'jazzmin',   
-    'django.contrib.admin',    
+    'jazzmin',
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -27,12 +35,15 @@ INSTALLED_APPS = [
     'accounts',
     'products',
     'messaging',
-    'dashbord', 
+    'dashbord',
 ]
 
+# =========================
+# MIDDLEWARE
+# =========================
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # serve static in production
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -41,17 +52,23 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# =========================
+# AUTHENTICATION
+# =========================
 AUTHENTICATION_BACKENDS = [
-    'accounts.backends.EmailBackend',  # custom backend
+    'accounts.backends.EmailBackend',  # your custom backend
     'django.contrib.auth.backends.ModelBackend',
 ]
 
+# =========================
+# URLS
+# =========================
 ROOT_URLCONF = 'unimart.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [BASE_DIR / 'templates'],  # your templates folder
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -65,19 +82,19 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'unimart.wsgi.application'
 
-# ===================================================================
+# =========================
 # DATABASE
-# ===================================================================
+# =========================
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
+        'ENGINE': 'django.db.backends.sqlite3',  # change to Postgres if needed
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
-# ===================================================================
+# =========================
 # PASSWORD VALIDATION
-# ===================================================================
+# =========================
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',},
@@ -85,37 +102,42 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',},
 ]
 
-# ===================================================================
+# =========================
 # INTERNATIONALIZATION
-# ===================================================================
+# =========================
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# ===================================================================
+# =========================
 # STATIC & MEDIA FILES
-# ===================================================================
+# =========================
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / "static"]
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [BASE_DIR / "static"]           # your dev static folder
+STATIC_ROOT = BASE_DIR / 'staticfiles'            # production static files
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'  # WhiteNoise
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+# =========================
+# JAZZMIN SETTINGS
+# =========================
 JAZZMIN_SETTINGS = {
     "site_title": "Unimart Admin",
     "site_header": "Unimart Admin",
-    "site_brand": "Unimart Admin",               # hide text
+    "site_brand": "Unimart Admin",
     "welcome_sign": "Welcome to Unimart Admin",
     "custom_css": "css/jazzmin_custom.css",
-    "site_logo": "images/logo.png", # path relative to static
-              # width in pixels
+    "site_logo": "images/logo.png",
 }
 
 JAZZMIN_UI_TWEAKS = {
-    "theme": "flatly",  # or any Bootswatch theme
+    "theme": "flatly",
 }
 
-
-LOGIN_URL = 'login'  # this should be the URL name of your login view
+# =========================
+# LOGIN
+# =========================
+LOGIN_URL = 'login'  # URL name of login view
