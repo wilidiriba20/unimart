@@ -3,7 +3,8 @@ from .models import Product
 from accounts.models import User as CustomUser
 from django.db.models import Q
 from django.db.models import Avg, Count
-from messaging.models import Review  # import Review model
+from messaging.models import Review 
+from django.contrib.auth.decorators import login_required
 app_name = 'products'
 
 def index(request):
@@ -58,9 +59,9 @@ def index(request):
 
 
 
+@login_required(login_url='login')  # ✅ redirects if not logged in
 def sell(request, product_id=None):
     if product_id:
-        # Editing existing product
         product = get_object_or_404(Product, id=product_id, seller=request.user)
     else:
         product = None
@@ -74,17 +75,15 @@ def sell(request, product_id=None):
         image = request.FILES.get('image')
         
         if product:
-            # Update existing product
             product.title = title
             product.price = price
             product.description = description
             product.category = category
             product.condition = condition
-            if image:  # Only update image if a new one is uploaded
+            if image:
                 product.image = image
             product.save()
         else:
-            # Add new product
             Product.objects.create(
                 title=title,
                 price=price,
@@ -99,9 +98,7 @@ def sell(request, product_id=None):
             return redirect('products:sell')
         return redirect('products:index')
 
-    # GET request → show the form (pre-filled if editing)
-    context = {'product': product}
-    return render(request, "products/sell.html", context)
+    return render(request, "products/sell.html", {'product': product})
 def product_detail(request, id):
     product = get_object_or_404(Product, id=id)
     seller = product.seller
