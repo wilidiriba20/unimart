@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-import dj_database_url  # make sure to install: pip install dj-database-url
+import dj_database_url  # pip install dj-database-url
 
 # =========================
 # BASE DIRECTORY
@@ -13,10 +13,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-secret-key')
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-# Replace with your Render URL(s)
 ALLOWED_HOSTS = [
-     ".onrender.com",
-    "*"
+    ".onrender.com",  # your render domain
+    "*"                # temporary for testing, remove "*" in production
 ]
 
 # =========================
@@ -39,6 +38,8 @@ INSTALLED_APPS = [
     'products',
     'messaging',
     'dashbord',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 # =========================
@@ -46,7 +47,7 @@ INSTALLED_APPS = [
 # =========================
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # static files in production
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # serve static in production
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -59,7 +60,7 @@ MIDDLEWARE = [
 # AUTHENTICATION
 # =========================
 AUTHENTICATION_BACKENDS = [
-    'accounts.backends.EmailBackend',  # your custom backend
+    'accounts.backends.EmailBackend',  # custom backend
     'django.contrib.auth.backends.ModelBackend',
 ]
 
@@ -94,8 +95,31 @@ DATABASES = {
         conn_max_age=600
     )
 }
+
+if DEBUG:
+    # Local media in development
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = BASE_DIR / 'media'
+    DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+else:
+    # Cloudinary in production
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+    CLOUDINARY_STORAGE = {
+        'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+        'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+        'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+    }
+
 # =========================
-# CLOUDINARY MEDIA STORAGE
+# STATIC FILES (CSS, JS, Images)
+# =========================
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / "static"]           # dev static
+STATIC_ROOT = BASE_DIR / 'staticfiles'            # production static
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# =========================
+# MEDIA FILES (uploads)
 # =========================
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
@@ -104,6 +128,7 @@ CLOUDINARY_STORAGE = {
     'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
     'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
 }
+
 # =========================
 # PASSWORD VALIDATION
 # =========================
@@ -123,17 +148,6 @@ USE_I18N = True
 USE_TZ = True
 
 # =========================
-# STATIC & MEDIA FILES
-# =========================
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / "static"]           # dev static
-STATIC_ROOT = BASE_DIR / 'staticfiles'            # production static
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-if DEBUG:
-    MEDIA_URL = '/media/'
-    MEDIA_ROOT = BASE_DIR / 'media'
-# =========================
 # JAZZMIN SETTINGS
 # =========================
 JAZZMIN_SETTINGS = {
@@ -142,7 +156,7 @@ JAZZMIN_SETTINGS = {
     "site_brand": "Unimart Admin",
     "welcome_sign": "Welcome to Unimart Admin",
     "custom_css": "css/jazzmin_custom.css",
-    "site_logo": "images/logo.png",
+    "site_logo": "images/logo.png",  # must be in static/images/logo.png
 }
 
 JAZZMIN_UI_TWEAKS = {
