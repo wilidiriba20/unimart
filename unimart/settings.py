@@ -15,8 +15,7 @@ DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 # Replace with your Render URL(s)
 ALLOWED_HOSTS = [
-    "unimart-2-ybgw.onrender.com",
-    "www.unimart-2-ybgw.onrender.com",
+     ".onrender.com",
     "*"
 ]
 
