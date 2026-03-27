@@ -90,10 +90,20 @@ WSGI_APPLICATION = 'unimart.wsgi.application'
 # DATABASE
 # =========================
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL', f"sqlite:///{BASE_DIR / 'db.sqlite3'}"),
+        conn_max_age=600
+    )
+}
+# =========================
+# CLOUDINARY MEDIA STORAGE
+# =========================
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
 }
 # =========================
 # PASSWORD VALIDATION
@@ -121,9 +131,9 @@ STATICFILES_DIRS = [BASE_DIR / "static"]           # dev static
 STATIC_ROOT = BASE_DIR / 'staticfiles'            # production static
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
-
+if DEBUG:
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = BASE_DIR / 'media'
 # =========================
 # JAZZMIN SETTINGS
 # =========================
