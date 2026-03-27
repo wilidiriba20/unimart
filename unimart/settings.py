@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-import dj_database_url  # pip install dj-database-url
+import dj_database_url
 
 # =========================
 # BASE DIRECTORY
@@ -10,13 +10,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # =========================
 # SECURITY
 # =========================
-SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-secret-key')
-DEBUG = os.environ.get('DEBUG', 'True') == 'True'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
+DEBUG = os.environ.get("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = [
-    ".onrender.com",  # your render domain
-    "*"                # temporary for testing, remove "*" in production
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(",")
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.railway.app",
 ]
 
 # =========================
@@ -36,12 +37,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'cloudinary_storage',
     'django.contrib.staticfiles',
+
+    # your apps
     'accounts',
     'products',
     'messaging',
     'dashbord',
+
     'cloudinary',
-    
 ]
 
 # =========================
@@ -49,21 +52,16 @@ INSTALLED_APPS = [
 # =========================
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # serve static in production
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
 
-# =========================
-# AUTHENTICATION
-# =========================
-AUTHENTICATION_BACKENDS = [
-    'accounts.backends.EmailBackend',  # custom backend
-    'django.contrib.auth.backends.ModelBackend',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 # =========================
@@ -71,10 +69,13 @@ AUTHENTICATION_BACKENDS = [
 # =========================
 ROOT_URLCONF = 'unimart.urls'
 
+# =========================
+# TEMPLATES
+# =========================
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],  # your templates folder
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -86,6 +87,9 @@ TEMPLATES = [
     },
 ]
 
+# =========================
+# WSGI
+# =========================
 WSGI_APPLICATION = 'unimart.wsgi.application'
 
 # =========================
@@ -93,34 +97,39 @@ WSGI_APPLICATION = 'unimart.wsgi.application'
 # =========================
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL', f"sqlite:///{BASE_DIR / 'db.sqlite3'}"),
-        conn_max_age=600
+        default=os.environ.get('DATABASE_URL'),
+        conn_max_age=600,
+        ssl_require=True
     )
 }
 
-if DEBUG:
-    # Local media in development
-    MEDIA_URL = '/media/'
-    MEDIA_ROOT = BASE_DIR / 'media'
-    DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
-else:
-    # Cloudinary in production
-    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-    CLOUDINARY_STORAGE = {
-        'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
-        'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
-        'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
-    }
-
 # =========================
-# STATIC FILES (CSS, JS, Images)
+# STATIC FILES
 # =========================
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / "static"]           # dev static
-STATIC_ROOT = BASE_DIR / 'staticfiles'            # production static
+STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+# =========================
+# MEDIA (CLOUDINARY)
+# =========================
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+}
+
+# =========================
+# AUTHENTICATION
+# =========================
+AUTHENTICATION_BACKENDS = [
+    'accounts.backends.EmailBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 # =========================
 # PASSWORD VALIDATION
@@ -137,19 +146,20 @@ AUTH_PASSWORD_VALIDATORS = [
 # =========================
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
+
 USE_I18N = True
 USE_TZ = True
 
 # =========================
-# JAZZMIN SETTINGS
+# JAZZMIN
 # =========================
 JAZZMIN_SETTINGS = {
     "site_title": "Unimart Admin",
-    "site_header": "Unimart Admin",
-    "site_brand": "Unimart Admin",
+    "site_header": "Unimart",
+    "site_brand": "Unimart",
     "welcome_sign": "Welcome to Unimart Admin",
     "custom_css": "css/jazzmin_custom.css",
-    "site_logo": "images/logo.png",  # must be in static/images/logo.png
+    "site_logo": "images/logo.png",
 }
 
 JAZZMIN_UI_TWEAKS = {
@@ -162,7 +172,15 @@ JAZZMIN_UI_TWEAKS = {
 LOGIN_URL = 'login'
 
 # =========================
-# LOGGING (helps debug 500 errors)
+# SECURITY (IMPORTANT)
+# =========================
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+# =========================
+# LOGGING
 # =========================
 LOGGING = {
     'version': 1,
